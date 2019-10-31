@@ -119,7 +119,7 @@ See [Installation in pyenv documentation](https://github.com/pyenv/pyenv#install
 
 The rest of the commands below should work on all Operating Systems. Make sure you're in the root directory for the project before running them.
 
-Install Python 3.8.0
+### Install Python 3.8.0
 
 ```
 pyenv install 3.8.0
