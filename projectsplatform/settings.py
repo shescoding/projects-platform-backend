@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = 'dulwepf_b#@eh19w)==v+pxvw$u$2gbxpwoevmzg)h-pl1mded'
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -73,8 +74,12 @@ WSGI_APPLICATION = 'projectsplatform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'scprojects',
+        'USER': 'scadmin',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
