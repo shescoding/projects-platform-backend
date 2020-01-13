@@ -20,5 +20,7 @@ from scprojects import views
 urlpatterns = [
     path('scprojects/', include('scprojects.urls')),
     path('admin/', admin.site.urls),
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    path('projects/', views.projects, name='projects'),
+
 ]
