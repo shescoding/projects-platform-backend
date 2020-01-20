@@ -122,3 +122,6 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+LOGIN_REDIRECT_URL = FRONTEND_DOMAIN_NAME
