@@ -19,6 +19,7 @@ class Project(models.Model):
 
     def __dict__(self):
         return {
+            "id": self.id,
             "name": self.name,
             "github_url": self.github_url,
             # "lead": self.lead,

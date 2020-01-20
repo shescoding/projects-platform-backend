@@ -14,7 +14,7 @@ def projects(request):
     projects = Project.objects.all()
     response = {}
     response["user"] = {
-        "username": request.user.username,
+        "name": request.user.username,
         "is_authenticated": request.user.is_authenticated,
     }
     response["projects"] = []
