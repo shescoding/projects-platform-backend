@@ -3,6 +3,20 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class UserProfile(models.Model):
+    # TODO: figure out which ones are required fields
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    department = models.CharField(max_length=100)
+    experience_lvl = models.PositiveSmallIntegerField()
+    position = models.CharField(max_length=255)
+    is_active = models.BooleanField()
+    github_username = models.CharField(max_length=255)
+    github_id = models.PositiveIntegerField()
+    github_url = models.URLField(max_length=255, blank=True)
+    avatar_url = models.URLField(max_length=255, blank=True)
+    gravatar_url = models.URLField(max_length=255, blank=True)
+
+
 class Project(models.Model):
     name = models.CharField(max_length=255)
     github_url = models.URLField(max_length=255, blank=True)
