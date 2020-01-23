@@ -153,3 +153,6 @@ pipenv run server
 
 Once the local development server is up and running, it will provide a URL that you can open in your web browser. This is what you will likely see:
 > Starting development server at http://127.0.0.1:8000/
+
+# Get Secrets from Google Drive
+Note: you might need to request access for this file - https://drive.google.com/file/d/1tQlTUf2N2Tj4O8YXwD3F9_tg5DUNS4x3/view?usp=sharing
