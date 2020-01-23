@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'django.contrib.sites',
-    'scprojects',
+    'scprojects.apps.ScprojectsConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

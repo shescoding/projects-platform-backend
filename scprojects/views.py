@@ -19,7 +19,7 @@ def projects(request):
     }
     response["projects"] = []
     for project in list(projects):
-        json_obj = project.__dict__()
+        json_obj = project.dict_format()
         response["projects"].append(json_obj)
 
     return JsonResponse(response)
@@ -27,4 +27,4 @@ def projects(request):
 
 def logout(request):
     django_logout(request)
-    return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "logout success"})
