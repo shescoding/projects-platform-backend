@@ -6,14 +6,14 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    experience_lvl = models.PositiveSmallIntegerField()
-    position = models.CharField(max_length=255)
+    experience_lvl = models.PositiveSmallIntegerField(blank=True)
+    position = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField()
-    github_username = models.CharField(max_length=255)
-    github_id = models.PositiveIntegerField()
-    github_url = models.URLField(max_length=255)
-    avatar_url = models.URLField(max_length=255)
-    gravatar_url = models.URLField(max_length=255)
+    github_username = models.CharField(max_length=255, blank=True)
+    github_id = models.PositiveIntegerField(blank=True)
+    github_url = models.URLField(max_length=255, blank=True)
+    avatar_url = models.URLField(max_length=255, blank=True)
+    gravatar_url = models.URLField(max_length=255, blank=True)
 
 
 class Project(models.Model):
@@ -23,17 +23,23 @@ class Project(models.Model):
     looking_for = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    # get lead info bundle
     lead = models.ForeignKey(
         UserProfile, on_delete=models.SET_NULL, null=True, related_name="leads")
 
-    # contributors = models.ManyToManyField(User)
+    contributors = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
 
+    def getInitials(self, user):
+        return user.first_name[0] + user.last_name[0]
+
     def dict_format(self):
-        print(self.lead)
+        contributers_list = [
+            self.getInitials(user) for user in self.contributors.all()]
+        print("contributors", contributers_list)
+        # get lead info bundle
+
         lead_obj = {}
         lead_obj["name"] = self.lead.user.first_name + \
             ' ' + self.lead.user.last_name
@@ -48,5 +54,5 @@ class Project(models.Model):
             "looking_for": self.looking_for,
             "created": self.created,
             "updated": self.updated,
-            # "contributors": self.contributors,
+            "contributors": contributers_list,
         }
