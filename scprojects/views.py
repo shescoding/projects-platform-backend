@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.authentication import TokenAuthentication
 from django.http import HttpResponse
 from .models import Project, UserProfile
 from django.contrib.auth.models import User
@@ -21,7 +22,9 @@ def projects(request):
     projects = Project.objects.all()
     response = {}
     print("csrf_token", csrf.get_token(request))
-    token = Token.objects.get(user=request.user)
+    token = ''
+    if request.user.is_authenticated:
+        token = Token.objects.get(user=request.user)
     print("auth token", str(token))
     response["user"] = {
         "name": request.user.username,

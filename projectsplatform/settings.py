@@ -42,16 +42,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
-CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-]
-SESSION_COOKIE_SAMESITE = None
-CRSF_COOKIE_SAMESITE = None
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,15 +61,22 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     )
 }
 
 ROOT_URLCONF = 'projectsplatform.urls'
+CORS_ORIGIN_ALLOW_ALL = True
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_HTTPONLY = False
+# SESSION_COOKIE_SECURE = False
+# CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = False
-SESSION_COOKIE_SECURE = False
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3000",
+# ]
+# SESSION_COOKIE_SAMESITE = None
+# CRSF_COOKIE_SAMESITE = None
 
 TEMPLATES = [
     {
