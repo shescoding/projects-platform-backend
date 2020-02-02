@@ -19,11 +19,11 @@ def index(request):
 def projects(request):
     projects = Project.objects.all()
     response = {}
-    print("token", csrf.get_token(request))
+    print("csrf_token", csrf.get_token(request))
     response["user"] = {
         "name": request.user.username,
         "is_authenticated": request.user.is_authenticated,
-        "token": csrf.get_token(request)
+        "csrf_token": csrf.get_token(request)
     }
     response["projects"] = []
     for project in list(projects):
