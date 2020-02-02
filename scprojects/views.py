@@ -9,21 +9,25 @@ from rest_framework.decorators import api_view
 from django.middleware import csrf
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
 
-@csrf_protect
+@csrf_exempt
 def projects(request):
     projects = Project.objects.all()
     response = {}
     print("csrf_token", csrf.get_token(request))
+    token = Token.objects.get(user=request.user)
+    print("auth token", str(token))
     response["user"] = {
         "name": request.user.username,
         "is_authenticated": request.user.is_authenticated,
-        "csrf_token": csrf.get_token(request)
+        "csrf_token": csrf.get_token(request),
+        "auth_token": str(token)
     }
     response["projects"] = []
     for project in list(projects):

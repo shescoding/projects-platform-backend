@@ -13,11 +13,11 @@ from rest_framework.authtoken.models import Token
 # ljsadkjdljs
 
 
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def create_auth_token(sender, instance=None, created=False, **kwargs):
-#     if created:
-#         token = Token.objects.create(user=instance)
-#         print("my token", token)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        token = Token.objects.create(user=instance)
+        print("my token", token)
 
 
 @receiver(user_logged_in)
@@ -26,8 +26,8 @@ def retrieve_social_data(request, user, **kwargs):
     data = SocialAccount.objects.filter(
         user=user, provider='github')[0].extra_data
     print('user_logged_in data', data)
-    token = Token.objects.create(user=user)
-    print("my token", token)
+    # token = Token.objects.create(user=user)
+    # print("my token", token)
     try:
         newUser = UserProfile.objects.get(user=user)
         print("User Profile", newUser)
