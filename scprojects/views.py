@@ -53,27 +53,20 @@ def projects(request):
 def add_project(request):
     print("HELLO WORLD")
     if request.user.is_authenticated and request.method == "POST":
-
         data = request.data
         github_url = request.data["github_url"]
-        print("github_url",
-              github_url)
         # Get repo name and description
         response = requests.get(
             'https://api.github.com/repos/shescoding/projects-platform-frontend')
         repo_data = response.json()
-        print("repo_data",
-              repo_data["contributors_url"], repo_data["description"])
+
         # Get contributors
         contributors_url_response = requests.get(
             repo_data["contributors_url"])
         contributors_data = contributors_url_response.json()
-        print("collab_data", len(contributors_data))
         contributors_list = []
         for contrib in contributors_data:
-            print("contrib", contrib)
             contributors_list.append(contrib['login'])
-        print("contributors_list", contributors_list)
 
         # Get lead
         user_profile = UserProfile.objects.get(user=request.user)
@@ -84,10 +77,10 @@ def add_project(request):
             description=repo_data["description"],
             looking_for=data["looking_for"],
             lead=user_profile,
-            # contributors=contributors_list,
+            contributors=contributors_list,
         )
         # call github api get name, description, contributors - done
-        # install library to save contributors list
+        # install library to save contributors list - done
         # save project and update lead with position, project id in one atomic transaction
         # success json response
         new_project.save()
