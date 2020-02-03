@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 import requests
+from django.db import IntegrityError, transaction
 
 
 def index(request):
@@ -50,14 +51,18 @@ def projects(request):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+@transaction.atomic
 def add_project(request):
     print("HELLO WORLD")
     if request.user.is_authenticated and request.method == "POST":
         data = request.data
-        github_url = request.data["github_url"]
+
         # Get repo name and description
+        github_url = request.data["github_url"]
+        repo_details = github_url.split(
+            'https://github.com/')[1]
         response = requests.get(
-            'https://api.github.com/repos/shescoding/projects-platform-frontend')
+            'https://api.github.com/repos/'+repo_details)
         repo_data = response.json()
 
         # Get contributors
@@ -70,6 +75,8 @@ def add_project(request):
 
         # Get lead
         user_profile = UserProfile.objects.get(user=request.user)
+        user_profile.position = request.data['position']
+        user_profile.save()
         print("user_profile", user_profile)
         new_project = Project(
             name=repo_data["name"],
@@ -79,14 +86,10 @@ def add_project(request):
             lead=user_profile,
             contributors=contributors_list,
         )
-        # call github api get name, description, contributors - done
-        # install library to save contributors list - done
-        # save project and update lead with position, project id in one atomic transaction
-        # success json response
         new_project.save()
-        return JsonResponse({"status": "new project"})
+        return JsonResponse({"status": "success"})
     else:
-        return JsonResponse({"status": "you need to be authenticated to create project"})
+        return JsonResponse({"status": "error", "reason": "authentication required"})
 
 
 def login(request):
