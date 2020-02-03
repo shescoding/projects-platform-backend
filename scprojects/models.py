@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from django_mysql.models import ListCharField
 # from .models import UserProfile
 # Create your models here.
 
@@ -27,6 +28,10 @@ class Project(models.Model):
         UserProfile, on_delete=models.SET_NULL, null=True, related_name="leads")
 
     contributors = models.ManyToManyField(User)
+    # contributors = ListCharField(
+    #     base_field=CharField(max_length=10),
+    #     max_length=(50 * 100)  # 50 * 100 character nominals, plus commas
+    # )
 
     def __str__(self):
         return self.name

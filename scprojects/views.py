@@ -13,18 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
-
-# from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-# from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-# from rest_auth.registration.views import SocialLoginView
-
-# CALLBACK_URL_YOU_SET_ON_GITHUB = 'http://127.0.0.1:8000/accounts/github/login/callback'
-
-
-# class GithubLogin(SocialLoginView):
-#     adapter_class = GitHubOAuth2Adapter
-#     callback_url = CALLBACK_URL_YOU_SET_ON_GITHUB
-#     client_class = OAuth2Client
+import requests
 
 
 def index(request):
@@ -64,19 +53,44 @@ def projects(request):
 def add_project(request):
     print("HELLO WORLD")
     if request.user.is_authenticated and request.method == "POST":
-        # user_profile = UserProfile.objects.get(user=request.user)
-        data = request.POST
+
+        data = request.data
+        github_url = request.data["github_url"]
         print("github_url",
-              request.data["github_url"])
-        # new_project = Project(
-        #     name="", //
-        #     github_url="", //
-        #     description="", //
-        #     looking_for="",
-        #     lead="", //
-        #     contributors="", //
-        # )
-        # new_project.save()
+              github_url)
+        # Get repo name and description
+        response = requests.get(
+            'https://api.github.com/repos/shescoding/projects-platform-frontend')
+        repo_data = response.json()
+        print("repo_data",
+              repo_data["contributors_url"], repo_data["description"])
+        # Get contributors
+        contributors_url_response = requests.get(
+            repo_data["contributors_url"])
+        contributors_data = contributors_url_response.json()
+        print("collab_data", len(contributors_data))
+        contributors_list = []
+        for contrib in contributors_data:
+            print("contrib", contrib)
+            contributors_list.append(contrib['login'])
+        print("contributors_list", contributors_list)
+
+        # Get lead
+        user_profile = UserProfile.objects.get(user=request.user)
+        print("user_profile", user_profile)
+        new_project = Project(
+            name=repo_data["name"],
+            github_url=data["github_url"],
+            description=repo_data["description"],
+            looking_for=data["looking_for"],
+            lead=user_profile,
+            # contributors=contributors_list,
+        )
+        # call github api get name, description, contributors - done
+        # install library to save contributors list
+        # save project and update lead with position, project id in one atomic transaction
+        # success json response
+        new_project.save()
         return JsonResponse({"status": "new project"})
     else:
         return JsonResponse({"status": "you need to be authenticated to create project"})
