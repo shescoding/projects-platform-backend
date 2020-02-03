@@ -63,17 +63,11 @@ def projects(request):
 @permission_classes([IsAuthenticated])
 def add_project(request):
     print("HELLO WORLD")
-    # get params from request
-    # pull infor from git repo - description
-    # if request.method == "GET":
-    #     return JsonResponse({"csrf": csrf.get_token(request)})
-    # print("user", request.user.id)
     if request.user.is_authenticated and request.method == "POST":
-        user_profile = UserProfile.objects.get(user=request.user)
+        # user_profile = UserProfile.objects.get(user=request.user)
+        data = request.POST
         print("github_url",
-              request)
-        for key, value in request.POST.items():
-            print('Key: %s' % (key))
+              request.data["github_url"])
         # new_project = Project(
         #     name="", //
         #     github_url="", //
