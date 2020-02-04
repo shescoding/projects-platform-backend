@@ -155,4 +155,5 @@ Once the local development server is up and running, it will provide a URL that 
 > Starting development server at http://127.0.0.1:8000/
 
 # Get Secrets from Google Drive
-Note: you might need to request access for this file - https://drive.google.com/file/d/1tQlTUf2N2Tj4O8YXwD3F9_tg5DUNS4x3/view?usp=sharing
+Note: you might need to request access for this file - 
+https://drive.google.com/file/d/1YpChsmcU6tFJWZ-lZn5iH3DGKQ6VCeJp/view?usp=sharing
