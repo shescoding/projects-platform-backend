@@ -22,4 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     re_path(r'^accounts/', include('allauth.urls')),
+    re_path(r'^rest-auth/', include('rest_auth.urls')),
+    re_path(r'^rest-auth/registration/',
+            include('rest_auth.registration.urls'))
+
 ]
