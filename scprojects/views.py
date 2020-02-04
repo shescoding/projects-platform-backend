@@ -53,7 +53,6 @@ def projects(request):
 @permission_classes([IsAuthenticated])
 @transaction.atomic
 def add_project(request):
-    print("HELLO WORLD")
     if request.user.is_authenticated and request.method == "POST":
         data = request.data
 
@@ -77,7 +76,6 @@ def add_project(request):
         user_profile = UserProfile.objects.get(user=request.user)
         user_profile.position = request.data['position']
         user_profile.save()
-        print("user_profile", user_profile)
         new_project = Project(
             name=repo_data["name"],
             github_url=data["github_url"],
@@ -93,11 +91,9 @@ def add_project(request):
 
 
 def login(request):
-    print("HELLO WORLD from login")
     token = ''
     if request.user.is_authenticated:
         token = Token.objects.get(user=request.user)
-    print("auth token", str(token))
     return HttpResponseRedirect("http://localhost:3000/token/"+str(token))
 
 
