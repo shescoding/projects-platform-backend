@@ -6,7 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     experience_lvl = models.PositiveSmallIntegerField(blank=True)
-    position = models.CharField(max_length=255, blank=True)
+    position = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField()
     github_username = models.CharField(max_length=255, blank=True)
     github_id = models.PositiveIntegerField(blank=True)
