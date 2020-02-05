@@ -127,6 +127,7 @@ def login(request):
             print("Login token from DB ", token)
             return HttpResponseRedirect("http://localhost:3000/token/"+str(token))
         except Token.DoesNotExist:
+            print("Token.DoesNotExist")
             token = None
             return HttpResponseRedirect("http://localhost:3000/")
 
