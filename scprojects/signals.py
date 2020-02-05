@@ -20,7 +20,8 @@ def retrieve_social_data(request, user, **kwargs):
     data = SocialAccount.objects.filter(
         user=user, provider='github')[0].extra_data
     try:
-        newUser = UserProfile.objects.get(user=user)
+        existingUser = UserProfile.objects.get(user=user)
+        token = Token.objects.create(user=user)
     except UserProfile.DoesNotExist:
         newUser = UserProfile(
             user=user,
@@ -34,3 +35,4 @@ def retrieve_social_data(request, user, **kwargs):
             gravatar_url=data["gravatar_id"],
         )
         newUser.save()
+        print("retrieve_social_data", newUser.user)

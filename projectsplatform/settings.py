@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from .secrets import *
+from dotenv import load_dotenv
+
+
+env_path = str(Path('.') / '.env')
+load_dotenv(dotenv_path=env_path)
+
+FRONTEND_URL = os.getenv('FRONTEND_URL')
+BACKEND_URL = os.getenv('BACKEND_URL')
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration'
@@ -139,4 +149,4 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
-LOGIN_REDIRECT_URL = FRONTEND_DOMAIN_NAME
+LOGIN_REDIRECT_URL = BACKEND_URL+'/projects/login'
