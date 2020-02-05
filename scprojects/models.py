@@ -42,6 +42,7 @@ class Project(models.Model):
             ' ' + self.lead.user.last_name
         lead_obj["position"] = self.lead.position
         lead_obj["experience"] = self.lead.experience_lvl
+        lead_obj["email"] = self.lead.user.email
         return {
             "id": self.id,
             "name": self.name,
