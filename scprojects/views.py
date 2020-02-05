@@ -28,7 +28,6 @@ def index(request):
 def projects(request):
     projects = Project.objects.all()
     response = {}
-    print("ccc request auth", request.auth)
     response["projects"] = []
     for project in list(projects):
         json_obj = project.dict_format()
@@ -43,12 +42,9 @@ def projects(request):
 @permission_classes([IsAuthenticated])
 def user(request):
     response = {}
-    print("ccc request auth", request.auth)
     token = ''
     if request.user.is_authenticated:
         token = Token.objects.get(user=request.user)
-        print("auth token", str(token), request.user,
-              request.user.is_authenticated)
         response["user"] = {
             "name": request.user.username,
             "is_authenticated": request.user.is_authenticated,
@@ -113,7 +109,6 @@ def login(request):
     if request.user.is_authenticated:
         try:
             token = Token.objects.get(user=request.user)
-            print("Login token from DB ", token)
             return HttpResponseRedirect(settings.FRONTEND_URL+"/token/"+str(token))
         except Token.DoesNotExist:
             print("Token.DoesNotExist")
