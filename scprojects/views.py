@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 import requests
 from django.db import IntegrityError, transaction
+from projectsplatform.settings import FRONTEND_URL
 
 
 def index(request):
@@ -108,11 +109,11 @@ def login(request):
     if request.user.is_authenticated:
         try:
             token = Token.objects.get(user=request.user)
-            return HttpResponseRedirect(settings.FRONTEND_URL+"/token/"+str(token))
+            return HttpResponseRedirect(FRONTEND_URL+"/token/"+str(token))
         except Token.DoesNotExist:
             print("Token.DoesNotExist")
             token = None
-            return HttpResponseRedirect(settings.FRONTEND_URL)
+            return HttpResponseRedirect(FRONTEND_URL)
 
 
 @csrf_exempt
