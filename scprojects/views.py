@@ -23,23 +23,12 @@ def index(request):
 
 @csrf_exempt
 @api_view(['GET'])
-# @authentication_classes([TokenAuthentication])
-# @permission_classes([IsAuthenticated])
+@authentication_classes([])
+@permission_classes([])
 def projects(request):
     projects = Project.objects.all()
     response = {}
     print("ccc request auth", request.auth)
-    # print("csrf_token", csrf.get_token(request))
-    token = ''
-    if request.user.is_authenticated:
-        token = Token.objects.get(user=request.user)
-    # print("auth token", str(token), request.user, request.user.is_authenticated)
-    response["user"] = {
-        "name": request.user.username,
-        "is_authenticated": request.user.is_authenticated,
-        "csrf_token": csrf.get_token(request),
-        "auth_token": str(token)
-    }
     response["projects"] = []
     for project in list(projects):
         json_obj = project.dict_format()
