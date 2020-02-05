@@ -33,7 +33,7 @@ class Project(models.Model):
     def getInitials(self, login):
         return login[0].upper()
 
-    def dict_format(self):
+    def dict_format(self, is_auth):
         contributers_list = [
             self.getInitials(login) for login in self.contributors]
         # get lead info bundle
@@ -42,11 +42,15 @@ class Project(models.Model):
             ' ' + self.lead.user.last_name
         lead_obj["position"] = self.lead.position
         lead_obj["experience"] = self.lead.experience_lvl
-        lead_obj["email"] = self.lead.user.email
+        github_url = ''
+        if is_auth:
+            lead_obj["email"] = self.lead.user.email
+            github_url = self.github_url
+
         return {
             "id": self.id,
             "name": self.name,
-            "github_url": self.github_url,
+            "github_url": github_url,
             "lead": lead_obj,
             "description": self.description,
             "looking_for": self.looking_for,

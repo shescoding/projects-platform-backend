@@ -26,15 +26,34 @@ def index(request):
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
-def projects(request):
+def projects_public(request):
+    print("NOT AUTHENTICATED")
     projects = Project.objects.all()
     response = {}
     response["projects"] = []
     for project in list(projects):
-        json_obj = project.dict_format()
+        json_obj = project.dict_format(False)
         response["projects"].append(json_obj)
 
     return JsonResponse(response)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def projects(request):
+    print("AUTHENTICATED")
+    if request.user.is_authenticated:
+        token = Token.objects.get(user=request.user)
+        projects = Project.objects.all()
+        response = {}
+        response["projects"] = []
+        for project in list(projects):
+            json_obj = project.dict_format(True)
+            response["projects"].append(json_obj)
+
+        return JsonResponse(response)
 
 
 @csrf_exempt
@@ -112,6 +131,7 @@ def login(request):
             return HttpResponseRedirect(FRONTEND_URL+"/token/"+str(token))
         except Token.DoesNotExist:
             print("Token.DoesNotExist")
+            # TODO: handle error
             token = None
             return HttpResponseRedirect(FRONTEND_URL)
 
