@@ -55,7 +55,6 @@ def user(request):
         response["user"] = ""
 
     return JsonResponse(response)
-# Todo separate projects with auth call
 
 
 @csrf_exempt
