@@ -23,16 +23,17 @@ def index(request):
 
 @csrf_exempt
 @api_view(['GET'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+# @authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def projects(request):
     projects = Project.objects.all()
     response = {}
-    print("csrf_token", csrf.get_token(request))
+    print("ccc request auth", request.auth)
+    # print("csrf_token", csrf.get_token(request))
     token = ''
     if request.user.is_authenticated:
         token = Token.objects.get(user=request.user)
-    print("auth token", str(token), request.user, request.user.is_authenticated)
+    # print("auth token", str(token), request.user, request.user.is_authenticated)
     response["user"] = {
         "name": request.user.username,
         "is_authenticated": request.user.is_authenticated,
@@ -45,6 +46,31 @@ def projects(request):
         response["projects"].append(json_obj)
 
     return JsonResponse(response)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def user(request):
+    response = {}
+    print("ccc request auth", request.auth)
+    token = ''
+    if request.user.is_authenticated:
+        token = Token.objects.get(user=request.user)
+        print("auth token", str(token), request.user,
+              request.user.is_authenticated)
+        response["user"] = {
+            "name": request.user.username,
+            "is_authenticated": request.user.is_authenticated,
+            "csrf_token": csrf.get_token(request),
+            "auth_token": str(token)
+        }
+    else:
+        response["user"] = ""
+
+    return JsonResponse(response)
+# Todo separate projects with auth call
 
 
 @csrf_exempt
@@ -85,9 +111,9 @@ def add_project(request):
             contributors=contributors_list,
         )
         new_project.save()
-        return JsonResponse({"status": "success"})
+        return JsonResponse({"result": "success"})
     else:
-        return JsonResponse({"status": "error", "reason": "authentication required"})
+        return JsonResponse({"result": "error", "reason": "authentication required"})
 
 
 @csrf_exempt
