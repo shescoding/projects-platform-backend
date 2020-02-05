@@ -97,6 +97,10 @@ def login(request):
     return HttpResponseRedirect("http://localhost:3000/token/"+str(token))
 
 
+@csrf_exempt
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def logout(request):
-    django_logout(request)
-    return JsonResponse({"status": "logout success"})
+    request.auth.delete()
+    return JsonResponse({"result": "success", "type": "logout"})
