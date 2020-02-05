@@ -90,11 +90,19 @@ def add_project(request):
         return JsonResponse({"status": "error", "reason": "authentication required"})
 
 
+@csrf_exempt
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def login(request):
     token = ''
     if request.user.is_authenticated:
-        token = Token.objects.get(user=request.user)
-    return HttpResponseRedirect("http://localhost:3000/token/"+str(token))
+        try:
+            token = Token.objects.get(user=request.user)
+            print("Login token from DB ", token)
+            return HttpResponseRedirect("http://localhost:3000/token/"+str(token))
+        except Token.DoesNotExist:
+            token = None
+            return HttpResponseRedirect("http://localhost:3000/")
 
 
 @csrf_exempt
