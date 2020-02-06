@@ -105,6 +105,7 @@ def add_project(request):
         # Get lead
         user_profile = UserProfile.objects.get(user=request.user)
         user_profile.position = request.data['position']
+        user_profile.experience_lvl = request.data['experience_lvl']
         user_profile.save()
         new_project = Project(
             name=repo_data["name"],
