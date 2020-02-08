@@ -86,11 +86,8 @@ def add_project(request):
         data = request.data
 
         # Get repo name and description
-        # Catch Key error  github_url = request.data["github_url"]
         try:
             github_url = request.data["github_url"]
-            # IndexError repo_details = github_url.split(
-            # IndexError: list index out of range
             repo_details = github_url.split(
                 'https://github.com/')[1]
             response = requests.get(
@@ -105,11 +102,12 @@ def add_project(request):
             for contrib in contributors_data:
                 contributors_list.append(contrib['login'])
 
-            # Get lead
+            # Field validation
             if len(contributors_list) == 0 or request.data['position'] == "" or request.data['experience_lvl'] == "" or repo_data["name"] == "" or data["github_url"] == "" or repo_data["description"] == "" or data["looking_for"] == "":
                 raise KeyError(
                     "Ensure all the fields are filled out and Github Repository has description")
 
+            # Get lead
             user_profile = UserProfile.objects.get(user=request.user)
             user_profile.position = request.data['position']
             user_profile.experience_lvl = request.data['experience_lvl']
