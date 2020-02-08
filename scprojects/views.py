@@ -72,7 +72,6 @@ def user(request):
         }
     else:
         response["user"] = ""
-
     return JsonResponse(response)
 
 
@@ -143,9 +142,7 @@ def login(request):
             return HttpResponseRedirect(FRONTEND_URL+"/token/"+str(token))
         except Token.DoesNotExist:
             print("Token.DoesNotExist")
-            # TODO: handle error
-            token = None
-            return HttpResponseRedirect(FRONTEND_URL)
+            return JsonResponse({"result": "error", "reason": "Token.DoesNotExist"})
 
 
 @csrf_exempt
