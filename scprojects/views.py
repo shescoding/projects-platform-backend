@@ -16,6 +16,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 import requests
 from django.db import IntegrityError, transaction
 from projectsplatform.settings import FRONTEND_URL
+from django.db import IntegrityError
 
 
 def index(request):
@@ -123,12 +124,14 @@ def add_project(request):
             return JsonResponse({"result": "success"})
         except KeyError as error:
             return JsonResponse(
-                {"result": "error", "reason": "KeyError: "+str(error)})
+                {"result": "error", "error_type": "KeyError", "reason": "KeyError: "+str(error), "message": "Some of the form fields are either empty or filled out wrong"})
         except IndexError as error:
             return JsonResponse(
-                {"result": "error", "reason": "IndexError: "+str(error)+". Check if github_url is valid"})
+                {"result": "error", "error_type": "IndexError", "reason": "IndexError: "+str(error)+". Check if github_url is valid", "message": "Check if github_url is valid"})
+        except IntegrityError as error:
+            return JsonResponse({"result": "error", "error_type": "IntegrityError", "reason": "Something went wrong on tring to create project in DB.", "message": "Please make sure your Github project has description"})
     else:
-        return JsonResponse({"result": "error", "reason": "authentication required"})
+        return JsonResponse({"result": "error", "error_type": "Unauthenticated", "reason": "authentication required"})
 
 
 @csrf_exempt
