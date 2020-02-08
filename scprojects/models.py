@@ -17,7 +17,8 @@ class UserProfile(models.Model):
 
 class Project(models.Model):
     name = models.CharField(null=False, blank=False, max_length=255)
-    github_url = models.URLField(null=False, blank=False, max_length=255)
+    github_url = models.URLField(
+        null=False, blank=False, max_length=255, unique=True)
     description = models.TextField(null=False, blank=False)
     looking_for = models.TextField(null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True)

@@ -129,7 +129,7 @@ def add_project(request):
             return JsonResponse(
                 {"result": "error", "error_type": "IndexError", "reason": "IndexError: "+str(error)+". Check if github_url is valid", "message": "Check if github_url is valid"})
         except IntegrityError as error:
-            return JsonResponse({"result": "error", "error_type": "IntegrityError", "reason": "Something went wrong on tring to create project in DB.", "message": "Please make sure your Github project has description"})
+            return JsonResponse({"result": "error", "error_type": "IntegrityError", "reason": "Something went wrong on tring to create project in DB.", "message": "Please make sure your Github project has description, and it doesn't already exist in the projects list."})
     else:
         return JsonResponse({"result": "error", "error_type": "Unauthenticated", "reason": "authentication required"})
 
