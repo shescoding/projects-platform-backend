@@ -21,7 +21,10 @@ def retrieve_social_data(request, user, **kwargs):
         user=user, provider='github')[0].extra_data
     try:
         existingUser = UserProfile.objects.get(user=user)
-        token = Token.objects.create(user=user)
+        token = Token.objects.filter(user=user)
+        if token:
+            token.delete()
+        Token.objects.create(user=user)
     except UserProfile.DoesNotExist:
         newUser = UserProfile(
             user=user,

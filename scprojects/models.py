@@ -16,14 +16,15 @@ class UserProfile(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=255)
-    github_url = models.URLField(max_length=255)
-    description = models.TextField()
-    looking_for = models.TextField()
+    name = models.CharField(null=False, blank=False, max_length=255)
+    github_url = models.URLField(
+        null=False, blank=False, max_length=255, unique=True)
+    description = models.TextField(null=False, blank=False)
+    looking_for = models.TextField(null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     lead = models.ForeignKey(
-        UserProfile, on_delete=models.SET_NULL, null=True, related_name="leads")
+        UserProfile, on_delete=models.SET_NULL, null=True, related_name="leads", blank=False)
     contributors = ArrayField(
         models.CharField(max_length=100))
 
