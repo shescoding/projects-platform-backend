@@ -19,7 +19,7 @@ from projectsplatform.settings import FRONTEND_URL
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("She's Coding Projects API")
 
 
 @csrf_exempt
@@ -52,7 +52,6 @@ def projects(request):
         for project in list(projects):
             json_obj = project.dict_format(True)
             response["projects"].append(json_obj)
-
         return JsonResponse(response)
 
 
@@ -87,36 +86,50 @@ def add_project(request):
         data = request.data
 
         # Get repo name and description
-        github_url = request.data["github_url"]
-        repo_details = github_url.split(
-            'https://github.com/')[1]
-        response = requests.get(
-            'https://api.github.com/repos/'+repo_details)
-        repo_data = response.json()
+        # Catch Key error  github_url = request.data["github_url"]
+        try:
+            github_url = request.data["github_url"]
+            # IndexError repo_details = github_url.split(
+            # IndexError: list index out of range
+            repo_details = github_url.split(
+                'https://github.com/')[1]
+            response = requests.get(
+                'https://api.github.com/repos/'+repo_details)
+            repo_data = response.json()
 
-        # Get contributors
-        contributors_url_response = requests.get(
-            repo_data["contributors_url"])
-        contributors_data = contributors_url_response.json()
-        contributors_list = []
-        for contrib in contributors_data:
-            contributors_list.append(contrib['login'])
+            # Get contributors
+            contributors_url_response = requests.get(
+                repo_data["contributors_url"])
+            contributors_data = contributors_url_response.json()
+            contributors_list = []
+            for contrib in contributors_data:
+                contributors_list.append(contrib['login'])
 
-        # Get lead
-        user_profile = UserProfile.objects.get(user=request.user)
-        user_profile.position = request.data['position']
-        user_profile.experience_lvl = request.data['experience_lvl']
-        user_profile.save()
-        new_project = Project(
-            name=repo_data["name"],
-            github_url=data["github_url"],
-            description=repo_data["description"],
-            looking_for=data["looking_for"],
-            lead=user_profile,
-            contributors=contributors_list,
-        )
-        new_project.save()
-        return JsonResponse({"result": "success"})
+            # Get lead
+            if len(contributors_list) == 0 or request.data['position'] == "" or request.data['experience_lvl'] == "" or repo_data["name"] == "" or data["github_url"] == "" or repo_data["description"] == "" or data["looking_for"] == "":
+                raise KeyError(
+                    "Ensure all the fields are filled out and Github Repository has description")
+
+            user_profile = UserProfile.objects.get(user=request.user)
+            user_profile.position = request.data['position']
+            user_profile.experience_lvl = request.data['experience_lvl']
+            user_profile.save()
+            new_project = Project(
+                name=repo_data["name"],
+                github_url=data["github_url"],
+                description=repo_data["description"],
+                looking_for=data["looking_for"],
+                lead=user_profile,
+                contributors=contributors_list,
+            )
+            new_project.save()
+            return JsonResponse({"result": "success"})
+        except KeyError as error:
+            return JsonResponse(
+                {"result": "error", "reason": "KeyError: "+str(error)})
+        except IndexError as error:
+            return JsonResponse(
+                {"result": "error", "reason": "IndexError: "+str(error)+". Check if github_url is valid"})
     else:
         return JsonResponse({"result": "error", "reason": "authentication required"})
 
