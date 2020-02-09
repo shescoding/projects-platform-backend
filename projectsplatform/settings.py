@@ -165,3 +165,21 @@ AUTHENTICATION_BACKENDS = (
 
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
 LOGIN_REDIRECT_URL = BACKEND_URL+'/projects/login'
+
+# Provider specific settings
+SITE_ID = 2
+ACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_STORE_TOKENS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'APP': {
+            'client_id': os.getenv('GITHUB_CLIENT_ID'),
+            'secret': os.getenv('GITHUB_SECRET'),
+            'key': ''
+        },
+        'SCOPE': [
+            'user',
+        ]
+    }
+}
