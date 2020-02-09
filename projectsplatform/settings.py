@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from .secrets import *
 
 env_path = str(Path('.') / '.env')
 load_dotenv(dotenv_path=env_path)
@@ -32,7 +33,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['shescoding-projects.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = [
+    'shescoding-projects.us-east-1.elasticbeanstalk.com', '127.0.0.1']
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
