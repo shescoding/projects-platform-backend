@@ -162,8 +162,9 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
-LOGIN_REDIRECT_URL = BACKEND_URL+'/projects/login'
+LOGIN_REDIRECT_URL = '/projects/login'
 
 # Provider specific settings
 SITE_ID = 2
