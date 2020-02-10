@@ -142,7 +142,7 @@ def login(request):
     if request.user.is_authenticated:
         try:
             token = Token.objects.get(user=request.user)
-            return HttpResponseRedirect(FRONTEND_URL+"/token/"+str(token))
+            return HttpResponseRedirect(FRONTEND_URL+"/#/token/"+str(token))
         except Token.DoesNotExist:
             print("Token.DoesNotExist")
             return JsonResponse({"result": "error", "reason": "Token.DoesNotExist"})
