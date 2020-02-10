@@ -33,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'shescoding-projects.us-east-1.elasticbeanstalk.com', '127.0.0.1']
+    'shescoding-projects.us-east-1.elasticbeanstalk.com', '127.0.0.1', '3.220.23.41']
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
