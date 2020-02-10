@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+import requests
 
 env_path = str(Path('.') / '.env')
 load_dotenv(dotenv_path=env_path)
@@ -20,7 +21,6 @@ load_dotenv(dotenv_path=env_path)
 FRONTEND_URL = os.getenv('FRONTEND_URL')
 BACKEND_URL = os.getenv('BACKEND_URL')
 SECRET_KEY = os.getenv('SECRET_KEY')
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,7 +33,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'shescoding-projects.us-east-1.elasticbeanstalk.com', '127.0.0.1', '3.220.23.41']
+    'shescoding-projects.us-east-1.elasticbeanstalk.com', '3.220.23.41', 'localhost', '127.0.0.1']
+# adding current IP to allowed hosts
+try:
+    internal_ip = requests.get(
+        'http://instance-data/latest/meta-data/local-ipv4').text
+except requests.exceptions.ConnectionError:
+    pass
+else:
+    ALLOWED_HOSTS.append(internal_ip)
+del requests
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

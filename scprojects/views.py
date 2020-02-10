@@ -28,7 +28,8 @@ def index(request):
 @authentication_classes([])
 @permission_classes([])
 def projects_public(request):
-    print("NOT AUTHENTICATED")
+    print("NOT AUTHENTICATED xxx")
+    print('XXXXX request', request)
     projects = Project.objects.all()
     response = {}
     response["projects"] = []
