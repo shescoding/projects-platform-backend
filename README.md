@@ -1,8 +1,11 @@
-# Projects Platform Backend
+## How to contribute
+Create or pick a feature from https://github.com/shescoding/projects-platform-frontend/projects/1.
 
-Django backend for the She's Coding open-source projects platform
+## Community
+Join our slack space at She's Coding #projects channel to discuss this projects or ask questions.
 
-## Installation
+
+## Installation guide
 
 ### Mac OS X Only - Setup Homebrew
 
@@ -149,11 +152,14 @@ pipenv install
 pipenv run server
 ```
 
-### View Local Version of App
+### Install Postgres
+Follow the instruction on https://tutorial-extensions.djangogirls.org/en/optional_postgresql_installation/
 
+
+### View Local Version of App
 Once the local development server is up and running, it will provide a URL that you can open in your web browser. This is what you will likely see:
 > Starting development server at http://127.0.0.1:8000/
 
-# Get Secrets from Google Drive
-Note: you might need to request access for this file - 
-https://drive.google.com/file/d/1YpChsmcU6tFJWZ-lZn5iH3DGKQ6VCeJp/view?usp=sharing
+# Get Environment Variables from Google Drive
+It contains all the passwords and secret keys needed for the project. Note: you might need to request access for this file - https://drive.google.com/file/d/1x5-7mNvgJk7efDfr1iwLV7SwDjZcdfEC/view?usp=sharing
+
