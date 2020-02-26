@@ -1,5 +1,5 @@
 ## How to contribute
-Create or pick a feature from https://github.com/shescoding/projects-platform-frontend/projects/1.
+Create or pick a feature from https://github.com/shescoding/projects-platform-backend/projects/1.
 
 ## Community
 Join our slack space at She's Coding #projects channel to discuss this projects or ask questions.
