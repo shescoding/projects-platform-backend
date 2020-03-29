@@ -122,18 +122,18 @@ See [Installation in pyenv documentation](https://github.com/pyenv/pyenv#install
 
 The rest of the commands below should work on all Operating Systems. Make sure you're in the root directory for the project before running them.
 
-### Install Python 3.8.0
+### Install Python 3.8-dev
 
 ```
-pyenv install 3.8.0
+pyenv install 3.8-dev
 ```
 
-### Set local version of Python to 3.8.0
+### Set local version of Python to 3.8-dev
 
-This will set the version of Python used for the project to be 3.8.0. 
+This will set the version of Python used for the project to be 3.8-dev
 
 ```
-pyenv local 3.8.0 
+pyenv local 3.8-dev
 ```
 
 _You can verify which version of Python you're using  by running `python --version`._
