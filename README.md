@@ -153,10 +153,6 @@ pipenv install requirements.txt
 ### Start Local Development Server
 
 ```
-pipenv run server
-```
-or
-```
 ./manage.py runserver     
 ```
 
