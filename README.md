@@ -149,6 +149,24 @@ or
 ```
 pipenv install requirements.txt
 ```
+or 
+```
+pip install requirements.txt
+```
+or 
+```
+pip3 install requirements.txt
+```
+or try installing individually. Ex:
+```
+pip install asgiref==3.2.3
+```
+
+Install psycopg2 separately:
+
+```
+sudo apt-get install python3-psycopg2
+```
 
 ### Start Local Development Server
 
@@ -157,8 +175,7 @@ pipenv install requirements.txt
 ```
 
 ### Install Postgres
-Follow the instruction on https://tutorial-extensions.djangogirls.org/en/optional_postgresql_installation/
-
+Notes for installing Postgres - https://github.com/shescoding/projects-platform-backend/pull/9
 
 ### View Local Version of App
 Once the local development server is up and running, it will provide a URL that you can open in your web browser. This is what you will likely see:
