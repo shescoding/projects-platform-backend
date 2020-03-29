@@ -145,11 +145,19 @@ This will install the packages listed in `Pipfile` to be used for this project o
 ```
 pipenv install
 ```
+or 
+```
+pipenv install requirements.txt
+```
 
 ### Start Local Development Server
 
 ```
 pipenv run server
+```
+or
+```
+./manage.py runserver     
 ```
 
 ### Install Postgres
