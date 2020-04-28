@@ -1,8 +1,11 @@
-# Projects Platform Backend
+## How to contribute
+Create or pick a feature from https://github.com/shescoding/projects-platform-backend/projects/1.
 
-Django backend for the She's Coding open-source projects platform
+## Community
+Join our slack space at She's Coding #projects channel to discuss this projects or ask questions.
 
-## Installation
+
+## Installation guide
 
 ### Mac OS X Only - Setup Homebrew
 
@@ -119,18 +122,18 @@ See [Installation in pyenv documentation](https://github.com/pyenv/pyenv#install
 
 The rest of the commands below should work on all Operating Systems. Make sure you're in the root directory for the project before running them.
 
-### Install Python 3.8.0
+### Install Python 3.8-dev
 
 ```
-pyenv install 3.8.0
+pyenv install 3.8-dev
 ```
 
-### Set local version of Python to 3.8.0
+### Set local version of Python to 3.8-dev
 
-This will set the version of Python used for the project to be 3.8.0. 
+This will set the version of Python used for the project to be 3.8-dev
 
 ```
-pyenv local 3.8.0 
+pyenv local 3.8-dev
 ```
 
 _You can verify which version of Python you're using  by running `python --version`._
@@ -142,18 +145,42 @@ This will install the packages listed in `Pipfile` to be used for this project o
 ```
 pipenv install
 ```
+or 
+```
+pipenv install requirements.txt
+```
+or 
+```
+pip install requirements.txt
+```
+or 
+```
+pip3 install requirements.txt
+```
+or try installing individually. Ex:
+```
+pip install asgiref==3.2.3
+```
+
+Install psycopg2 separately:
+
+```
+sudo apt-get install python3-psycopg2
+```
 
 ### Start Local Development Server
 
 ```
-pipenv run server
+./manage.py runserver     
 ```
 
-### View Local Version of App
+### Install Postgres
+Notes for installing Postgres - https://github.com/shescoding/projects-platform-backend/pull/9
 
+### View Local Version of App
 Once the local development server is up and running, it will provide a URL that you can open in your web browser. This is what you will likely see:
 > Starting development server at http://127.0.0.1:8000/
 
-# Get Secrets from Google Drive
-Note: you might need to request access for this file - 
-https://drive.google.com/file/d/1YpChsmcU6tFJWZ-lZn5iH3DGKQ6VCeJp/view?usp=sharing
+# Get Environment Variables from Google Drive
+It contains all the passwords and secret keys needed for the project. Note: you might need to request access for this file - https://drive.google.com/file/d/1x5-7mNvgJk7efDfr1iwLV7SwDjZcdfEC/view?usp=sharing
+
