@@ -33,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'shescoding-projects.us-east-1.elasticbeanstalk.com', '3.220.23.41', 'localhost', '127.0.0.1']
+    'shescoding-projects.us-east-1.elasticbeanstalk.com', '3.220.23.41', 'localhost', '127.0.0.1', 'api.shescoding.org', 'projects-api.shescoding.org']
 # adding current IP to allowed hosts
 try:
     internal_ip = requests.get(
