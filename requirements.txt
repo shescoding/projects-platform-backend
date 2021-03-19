@@ -16,7 +16,7 @@ Django==2.2.6
 django-allauth==0.41.0
 django-cors-headers==3.2.1
 django-rest-auth==0.9.5
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 docker==4.2.0
 docker-compose==1.25.4
 dockerpty==0.4.1
